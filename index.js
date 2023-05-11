@@ -16,24 +16,80 @@ var _ = require('underbar');
  *
  * 4. To test your work, run the following command in your terminal:
  *
- *    npm start --prefix ./<YOUR_GITHUB_FOLDER>
+ *    npm start --prefix ./lgf-test
  *
  *    IMPORTANT: Make sure you replace <YOUR_GITHUB_FOLDER with your actual github folder name that is in your workspace.
  */
 
-var maleCount;
+var maleCount = function(array){
+    let males = _.filter(array, function(customer){
+        return customer.gender === 'male'
+    });
+    return males.length;
+};
 
-var femaleCount;
+var femaleCount = function(array){
+    let females = _.reduce(array, function(accumulator, current){ //acc => 0 | current => {0}
+        if(current.gender === 'female'){
+            accumulator += 1
+        }
+        return accumulator// return number
+    }, 0)
 
-var oldestCustomer;
+    return females;
+};
 
-var youngestCustomer;
+var oldestCustomer = function(array){
+    // reduce
+    let oldest = _.reduce(array, function(accumulator, current){
+        //determine if current customer is older than accumulator
+        if(current.age > accumulator.age){
+            return current;
+        } else{return accumulator;}
+    });
+    return oldest.name;
+};
 
-var averageBalance;
+var youngestCustomer = function(array){
+    let youngest = _.reduce(array, function(accumulator, current){
+        if(current.age < accumulator.age){
+            return current
+        } else{return accumulator}
+    });
+    return youngest.name;
+};
 
-var firstLetterCount;
+var averageBalance = function(array){
+        let amount = _.map(array, function(element, key){
+            if(key === 'balance'){
+                return element.replaceAll(/[$,]/g, '');
+            }
+        })
+    let average = _.reduce(amount,function(a, b){
+        a + b
+    }, 0) / amount.length;
+    return average;
+};
 
-var friendFirstLetterCount;
+var firstLetterCount = function(array, letter){
+    return _.reduce(array, function(accumulator, current){ //acc => 0 | current => {0}
+        if(current.name[0].toUpperCase() === letter.toUpperCase()){
+            accumulator += 1
+        }
+        return accumulator// return number
+    }, 0)
+};   
+   
+var friendFirstLetterCount = function(array, customer, letter){    
+    return _.reduce(array, function(accumulator, current){ //acc => 0 | current => {0}
+        if(current.name === customer){
+            if(current.friends[current][0].toUpperCase() === letter.toUpperCase()){
+                accumulator += 1
+            }
+        }
+        return accumulator// return number
+    }, 0)
+};
 
 var friendsCount;
 
