@@ -60,15 +60,10 @@ var youngestCustomer = function(array){
 };
 
 var averageBalance = function(array){
-        let amount = _.map(array, function(element, key){
-            if(key === 'balance'){
-                return element.replaceAll(/[$,]/g, '');
-            }
-        })
-    let average = _.reduce(amount,function(a, b){
-        a + b
-    }, 0) / amount.length;
-    return average;
+    const totalBalance = array.reduce((acc, customer) => customer.balance ? acc + +customer.balance.replaceAll(/[$,]/g, '') : acc, 0)
+    const hasBalance = array.filter((customer) => customer.balance) 
+    const balance = totalBalance / hasBalance.length;
+    return balance;
 };
 
 var firstLetterCount = function(array, letter){
@@ -81,15 +76,14 @@ var firstLetterCount = function(array, letter){
 };   
    
 var friendFirstLetterCount = function(array, customer, letter){    
-    return _.reduce(array, function(accumulator, current){ //acc => 0 | current => {0}
-        if(current.name === customer){
-            if(current.friends[current][0].toUpperCase() === letter.toUpperCase()){
-                accumulator += 1
-            }
-        }
-        return accumulator// return number
-    }, 0)
-};
+    let myFriends = array.reduce(function(acc, person){
+        return customer === person.name ? acc.concat(person.friends) : acc
+        }, []); 
+    let friendCount = myFriends.reduce(function(acc, friend){
+        return letter.toUpperCase() === friend[0].toUpperCase() ? acc += 1 : acc
+        }, 0);
+    return friendCount;
+}
 
 var friendsCount;
 
