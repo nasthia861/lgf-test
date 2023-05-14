@@ -80,12 +80,16 @@ var friendFirstLetterCount = function(array, customer, letter){
         return customer === person.name ? acc.concat(person.friends) : acc
         }, []); 
     let friendCount = myFriends.reduce(function(acc, friend){
-        return letter.toUpperCase() === friend[0].toUpperCase() ? acc += 1 : acc
+        return letter.toUpperCase() === friend.name[0].toUpperCase() ? acc += 1 : acc
         }, 0);
     return friendCount;
 }
 
-var friendsCount;
+var friendsCount = function(array, name){
+    array.map(function(element, key, customer){
+        name === customer.key.element;
+    })
+};
 
 var topThreeTags;
 
