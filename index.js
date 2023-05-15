@@ -86,9 +86,16 @@ var friendFirstLetterCount = function(array, customer, letter){
 }
 
 var friendsCount = function(array, name){
-    array.map(function(element, key, customer){
-        name === customer.key.element;
-    })
+    let friendsByName = array.reduce(function(acc, current){
+        let friends = current.friends;
+        for(let x = 0; x < friends.length; x++){
+            if(friends[x].name === name){
+                acc.push(current.name);
+            }
+        }
+        return acc;
+    }, [])
+    return friendsByName;
 };
 
 var topThreeTags;
