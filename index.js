@@ -98,9 +98,52 @@ var friendsCount = function(array, name){
     return friendsByName;
 };
 
-var topThreeTags;
+var topThreeTags = function(array){
+    //reduce the array by each object value
+    let tags = array.reduce(function(acc, customer){
+        //get the keys for all the tags in the array
+        let keys = customer.tags.reduce(function(acc, currentKey){
+            //push all the keys/values into a new array
+            acc.push(currentKey);
+            return acc;
+        }, [])
+        //join up all the tags in all the customer objects
+        return keys.concat(acc);
+    }, [])
+    //create empty object to push tags into
+    let countObj = {};
+    for(let i = 0; i < tags.length; i++){
+        //if the tag exists, add a count +1 to it
+        if(countObj[tags[i]]){
+            countObj[tags[i]] += 1;
+        //if tag does not exist, create it and set it equal to 1
+        } else{
+            countObj[tags[i]] = 1;
+        }
+    }
+    //turn object into array of arrays
+    let countArray = Object.entries(countObj);
+    //array.sort() method to sort array
+    //we want it to read the second value in each array, from high to low
+    const sortedArray = countArray.sort(function(a, b){return b[1] - a[1]});
+    //get the top 3
+    let topThreeArray = [sortedArray[0][0], sortedArray[1][0], sortedArray[2][0]]
+    return topThreeArray; 
+};
 
-var genderCount;
+var genderCount = function(array){
+    let genderObj = array.reduce(function(acc, current){
+        acc.female = femaleCount(array);
+        acc.male = maleCount(array);
+        acc['non-binary'] = _.reduce(array, function(accumulator, current){ //acc => 0 | current => {0}
+                if(current.gender === 'non-binary'){
+                    accumulator += 1
+                }
+                return accumulator// return number
+            }, 0)
+        return acc;
+    }, {})
+};
 
 //////////////////////////////////////////////////////////////////////
 // DON'T REMOVE THIS CODE ////////////////////////////////////////////
