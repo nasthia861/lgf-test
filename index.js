@@ -132,9 +132,13 @@ var topThreeTags = function(array){
 };
 
 var genderCount = function(array){
-    let genderObj = array.reduce(function(acc, current){
+    //create obj with reduced array information
+    const genderObj = array.reduce(function(acc, current){
+        //adding key female to value  call of function femaleCount(array)
         acc.female = femaleCount(array);
+        //adding key male to value  call of function maleCount(array)
         acc.male = maleCount(array);
+        //adding key non-binary to value of reduced array to find the count of gender === non-binary
         acc['non-binary'] = _.reduce(array, function(accumulator, current){ //acc => 0 | current => {0}
                 if(current.gender === 'non-binary'){
                     accumulator += 1
@@ -143,6 +147,8 @@ var genderCount = function(array){
             }, 0)
         return acc;
     }, {})
+    //returning new object
+    return genderObj;
 };
 
 //////////////////////////////////////////////////////////////////////
